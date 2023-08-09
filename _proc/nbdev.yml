@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "nntrain"
+  site-url: "https://lucasvw.github.io/nntrain"
+  description: "small neural network training library based off miniai from fastai"
+  repo-branch: main
+  repo-url: "https://github.com/lucasvw/nntrain"
