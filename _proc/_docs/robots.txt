@@ -1,1 +1,0 @@
-Sitemap: https://lucasvw.github.io/nntrain/sitemap.xml
