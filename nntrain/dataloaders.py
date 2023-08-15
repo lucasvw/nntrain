@@ -30,14 +30,18 @@ def hf_ds_collate_func(data):
 # %% ../nbs/01_dataloaders.ipynb 4
 class DataLoaders:
     def __init__(self, train, valid):
+        '''Dataloaders class wrapping two PyTorch dataloaders: train and valid'''
         self.train = train
         self.valid = valid
     
     @classmethod
     def _get_dls(cls, train_ds, valid_ds, bs, collate_fn):
+        '''Helper function returning 2 PyTorch Dataloaders as a tuple for 2 Datasets'''
         return (DataLoader(train_ds, batch_size=bs, shuffle=True, collate_fn=collate_fn),
                 DataLoader(valid_ds, batch_size=bs*2, collate_fn=collate_fn))
         
     @classmethod
     def from_hf_dd(cls, dd, batch_size):
+        '''Factory method to create a Dataloaders object for a Huggingface Dataset dict,
+        uses the `hf_ds_collate_func` collation function'''
         return cls(*cls._get_dls(*dd.values(), batch_size, hf_ds_collate_func))
