@@ -3,13 +3,13 @@
 # %% auto 0
 __all__ = ['hf_ds_collate_func', 'DataLoaders']
 
-# %% ../nbs/01_dataloaders.ipynb 1
+# %% ../nbs/01_dataloaders.ipynb 2
 import torchvision.transforms.functional as TF
 from torch.utils.data import DataLoader
 import torch
 import PIL
 
-# %% ../nbs/01_dataloaders.ipynb 2
+# %% ../nbs/01_dataloaders.ipynb 3
 def hf_ds_collate_func(data):
     '''
     Collation function for building a PyTorch DataLoader from a a huggingface dataset.
@@ -27,7 +27,7 @@ def hf_ds_collate_func(data):
     data = zip(*data)                                    # zip data of any length not just (x,y) but also (x,y,z)
     return (torch.stack(i) for i in data)                
 
-# %% ../nbs/01_dataloaders.ipynb 3
+# %% ../nbs/01_dataloaders.ipynb 4
 class DataLoaders:
     def __init__(self, train, valid):
         self.train = train
