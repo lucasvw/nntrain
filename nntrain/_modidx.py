@@ -13,5 +13,5 @@ d = { 'settings': { 'branch': 'main',
                                                                                    'nntrain/dataloaders.py'),
                                      'nntrain.dataloaders.DataLoaders.from_hf_dd': ( 'dataloaders.html#dataloaders.from_hf_dd',
                                                                                      'nntrain/dataloaders.py'),
-                                     'nntrain.dataloaders.hf_ds_collate_func': ( 'dataloaders.html#hf_ds_collate_func',
-                                                                                 'nntrain/dataloaders.py')}}}
+                                     'nntrain.dataloaders.hf_ds_collate_fn': ( 'dataloaders.html#hf_ds_collate_fn',
+                                                                               'nntrain/dataloaders.py')}}}
