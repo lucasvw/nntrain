@@ -35,13 +35,13 @@ class DataLoaders:
         self.valid = valid
     
     @classmethod
-    def _get_dls(cls, train_ds, valid_ds, bs, collate_fn):
+    def _get_dls(cls, train_ds, valid_ds, bs, collate_fn, **kwargs):
         '''Helper function returning 2 PyTorch Dataloaders as a tuple for 2 Datasets'''
-        return (DataLoader(train_ds, batch_size=bs, shuffle=True, collate_fn=collate_fn),
-                DataLoader(valid_ds, batch_size=bs*2, collate_fn=collate_fn))
+        return (DataLoader(train_ds, batch_size=bs, shuffle=True, collate_fn=collate_fn, **kwargs),
+                DataLoader(valid_ds, batch_size=bs*2, collate_fn=collate_fn, **kwargs))
         
     @classmethod
-    def from_hf_dd(cls, dd, batch_size):
+    def from_hf_dd(cls, dd, batch_size, **kwargs):
         '''Factory method to create a Dataloaders object for a Huggingface Dataset dict,
         uses the `hf_ds_collate_func` collation function'''
-        return cls(*cls._get_dls(*dd.values(), batch_size, hf_ds_collate_func))
+        return cls(*cls._get_dls(*dd.values(), batch_size, hf_ds_collate_func, **kwargs))
