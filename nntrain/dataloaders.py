@@ -41,7 +41,7 @@ class DataLoaders:
                 DataLoader(valid_ds, batch_size=bs*2, collate_fn=collate_fn, **kwargs))
         
     @classmethod
-    def from_hf_dd(cls, dd, batch_size, **kwargs):
+    def from_hf_dd(cls, dd, batch_size, collate_fn=hf_ds_collate_func, **kwargs):
         '''Factory method to create a Dataloaders object for a Huggingface Dataset dict,
-        uses the `hf_ds_collate_func` collation function'''
-        return cls(*cls._get_dls(*dd.values(), batch_size, hf_ds_collate_func, **kwargs))
+        uses the `hf_ds_collate_func` collation function by default'''
+        return cls(*cls._get_dls(*dd.values(), batch_size, collate_fn, **kwargs))
