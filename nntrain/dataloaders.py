@@ -28,7 +28,7 @@ def hf_ds_collate_fn(data, flatten=True):
             return torch.tensor(i)
     
     to_tensor = partial(to_tensor, flatten=flatten)      # partially apply to_tensor() with flatten arg
-    data = list(map(to_tensor, el.values()) for el in data)  # map each item from a dataset entry through to_tensor()
+    data = (list(map(to_tensor, el.values())) for el in data)    # map each item from a dataset entry through to_tensor()
     data = zip(*data)                                    # zip data of any length not just (x,y) but also (x,y,z)
     return (torch.stack(i) for i in data)
 
