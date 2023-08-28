@@ -17,6 +17,7 @@ import torcheval.metrics as tem
 import matplotlib.pyplot as plt
 import random
 import numpy as np
+from .learner import Subscriber
 
 # %% ../nbs/03_activations.ipynb 3
 def set_seed(seed, deterministic=False):
