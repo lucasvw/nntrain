@@ -112,9 +112,8 @@ class NormalizationS(Subscriber):
         learn.batch = [(learn.batch[0] - self.mean) / self.std, learn.batch[1]]
 
 # %% ../nbs/03_activations.ipynb 8
-def conv_block(in_c, out_c, kernel_size=3, act=True, norm=True):
+def conv_block(in_c, out_c, kernel_size=3, stride=2, act=True, norm=True):
     padding = kernel_size // 2
-    stride = 2
     layers = [torch.nn.Conv2d(in_c, out_c, kernel_size, stride, padding, bias=not norm)]
     if norm: layers.append(torch.nn.BatchNorm2d(out_c))
     if act: layers.append(torch.nn.ReLU())
