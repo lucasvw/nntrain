@@ -4,6 +4,21 @@
 __all__ = ['SGD', 'Momentum', 'RMSProp', 'Adam', 'SchedulerS', 'conv_conn', 'ResBlock', 'resnet', 'ModelMonitorS', 'AugmentS']
 
 # %% ../nbs/04_acceleration.ipynb 2
+import torchvision.transforms.functional as TF
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from operator import attrgetter
+from functools import partial
+import fastcore.all as fc
+import math
+import torcheval.metrics as tem
+import matplotlib.pyplot as plt
+import random
+import numpy as np
+from .learner import Subscriber
+
+# %% ../nbs/04_acceleration.ipynb 3
 class SGD:
     def __init__(self, params, lr, wd=0.):
         self.params = list(params)
@@ -28,20 +43,6 @@ class SGD:
     def zero_grad(self):
         for p in self.params:
             p.grad.data.zero_()
-
-# %% ../nbs/04_acceleration.ipynb 3
-import torchvision.transforms.functional as TF
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from operator import attrgetter
-from functools import partial
-import fastcore.all as fc
-import math
-import torcheval.metrics as tem
-import matplotlib.pyplot as plt
-import random
-import numpy as np
 
 # %% ../nbs/04_acceleration.ipynb 4
 class Momentum(SGD):
