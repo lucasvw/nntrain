@@ -140,7 +140,7 @@ def resnet():
         nn.BatchNorm1d(10)                            # final batchnorm layer
     )
 
-# %% ../nbs/04_acceleration.ipynb 16
+# %% ../nbs/04_acceleration.ipynb 11
 class ModelMonitorS(Subscriber):
     
     def __init__(self, modules): self.modules = modules
@@ -179,7 +179,7 @@ class ModelMonitorS(Subscriber):
             total_mac += h.mac
         return f'{"Total parameters:":<20}{total_params:>10d} \n{"Total MACs:":<20}{total_mac:10.1f} \n\n' + out
 
-# %% ../nbs/04_acceleration.ipynb 21
+# %% ../nbs/04_acceleration.ipynb 12
 class AugmentS(Subscriber):
     def __init__(self, transform):
         self.transform = transform
