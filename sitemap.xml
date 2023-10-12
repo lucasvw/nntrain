@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://lucasvw.github.io/nntrain/rnn.html</loc>
+    <lastmod>2023-10-12T08:53:41.609Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lucasvw.github.io/nntrain/dataloaders.html</loc>
+    <lastmod>2023-10-12T08:53:41.013Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lucasvw.github.io/nntrain/acceleration.html</loc>
+    <lastmod>2023-10-12T08:53:40.225Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lucasvw.github.io/nntrain/activations.html</loc>
+    <lastmod>2023-10-12T08:53:39.241Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lucasvw.github.io/nntrain/ngram.html</loc>
+    <lastmod>2023-10-12T08:53:39.885Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lucasvw.github.io/nntrain/learner.html</loc>
+    <lastmod>2023-10-12T08:53:40.661Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lucasvw.github.io/nntrain/index.html</loc>
+    <lastmod>2023-10-12T08:53:41.317Z</lastmod>
+  </url>
+</urlset>

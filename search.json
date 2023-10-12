@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "rnn.html",
+    "href": "rnn.html",
+    "title": "RNN",
+    "section": "",
+    "text": "source\n\nSequentialDataset\n\n SequentialDataset (lines, c2i, sequence_length)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nVerticalSampler\n\n VerticalSampler (ds, batch_size)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nmulti_output_cross_entropy\n\n multi_output_cross_entropy (logits, targets)\n\n\nsource\n\n\nHiddenStateResetterS\n\n HiddenStateResetterS ()\n\nInitialize self. See help(type(self)) for accurate signature."
+  },
+  {
+    "objectID": "dataloaders.html",
+    "href": "dataloaders.html",
+    "title": "Dataloaders",
+    "section": "",
+    "text": "source\n\nhf_ds_collate_fn\n\n hf_ds_collate_fn (data, flatten=True)\n\nCollation function for building a PyTorch DataLoader from a a huggingface dataset. Tries to put all items from an entry into the dataset to tensor. PIL images are converted to tensor, either flattened or not\n\nsource\n\n\nDataLoaders\n\n DataLoaders (train, valid)\n\nClass that exposes two PyTorch dataloaders as train and valid arguments\n\nsource\n\n\nDataLoaders.from_hf_dd\n\n DataLoaders.from_hf_dd (dd, batch_size, collate_fn=&lt;function\n                         hf_ds_collate_fn&gt;, **kwargs)\n\nFactory method to create a Dataloaders object for a Huggingface Dataset dict, uses the hf_ds_collate_func collation function by default, **kwargs are passes to the DataLoaders\nExample usage:\n\nfrom datasets import load_dataset,load_dataset_builder\nimport torchvision.transforms.functional as TF\nimport torch\nimport torch.nn as nn\nimport torch.nn.functional as F\n\n\nname = \"fashion_mnist\"\nds_builder = load_dataset_builder(name)\nds_hf = load_dataset(name)\n\n\n\n\n\n\n\nDownloading and preparing dataset fashion_mnist/fashion_mnist (download: 29.45 MiB, generated: 34.84 MiB, post-processed: Unknown size, total: 64.29 MiB) to /root/.cache/huggingface/datasets/fashion_mnist/fashion_mnist/1.0.0/8d6c32399aa01613d96e2cbc9b13638f359ef62bb33612b077b4c247f6ef99c1...\nDataset fashion_mnist downloaded and prepared to /root/.cache/huggingface/datasets/fashion_mnist/fashion_mnist/1.0.0/8d6c32399aa01613d96e2cbc9b13638f359ef62bb33612b077b4c247f6ef99c1. Subsequent calls will reuse this data.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndef accuracy(preds, targs):\n    return (preds.argmax(dim=1) == targs).float().mean() \n\ndef fit(epochs):\n    for epoch in range(epochs):\n        model.train()                                       \n        n_t = train_loss_s = 0                              \n        for xb, yb in dls.train:\n            preds = model(xb)\n            train_loss = loss_func(preds, yb)\n            train_loss.backward()\n            \n            n_t += len(xb)\n            train_loss_s += train_loss.item() * len(xb)\n            \n            opt.step()\n            opt.zero_grad()\n        \n        model.eval()                                        \n        n_v = valid_loss_s = acc_s = 0                      \n        for xb, yb in dls.valid: \n            with torch.no_grad():                           \n                preds = model(xb)\n                valid_loss = loss_func(preds, yb)\n                \n                n_v += len(xb)\n                valid_loss_s += valid_loss.item() * len(xb)\n                acc_s += accuracy(preds, yb) * len(xb)\n        \n        train_loss = train_loss_s / n_t                     \n        valid_loss = valid_loss_s / n_v\n        acc = acc_s / n_v\n        print(f'{epoch=} | {train_loss=:.3f} | {valid_loss=:.3f} | {acc=:.3f}')\n\ndef get_model_opt():\n    layers = [nn.Linear(n_in, n_h), nn.ReLU(), nn.Linear(n_h, n_out)]\n    model = nn.Sequential(*layers)\n    \n    opt = torch.optim.SGD(model.parameters(), lr)\n    \n    return model, opt\n\nn_in  = 28*28\nn_h   = 50\nn_out = 10\nlr    = 0.01\nbs    = 1024\nloss_func = F.cross_entropy\n\nmodel, opt = get_model_opt()\n\ndls = DataLoaders.from_hf_dd(ds_hf, bs)\n\nfit(1)\n\nepoch=0 | train_loss=2.185 | valid_loss=2.070 | acc=0.407"
+  },
+  {
+    "objectID": "acceleration.html",
+    "href": "acceleration.html",
+    "title": "Acceleration",
+    "section": "",
+    "text": "source\n\nSGD\n\n SGD (params, lr, wd=0.0)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nMomentum\n\n Momentum (params, lr, wd=0.0, mom=0.9)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nRMSProp\n\n RMSProp (params, lr, wd=0.0, sqr_mom=0.99, eps=1e-05)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nAdam\n\n Adam (params, lr, wd=0.0, beta1=0.9, beta2=0.99, eps=1e-05)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nSchedulerS\n\n SchedulerS (scheduler_class)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nconv_conn\n\n conv_conn (in_c, out_c, kernel_size=3, stride=2)\n\n\nsource\n\n\nResBlock\n\n ResBlock (in_c, out_c, stride=2)\n\nBase class for all neural network modules.\nYour models should also subclass this class.\nModules can also contain other Modules, allowing to nest them in a tree structure. You can assign the submodules as regular attributes::\nimport torch.nn as nn\nimport torch.nn.functional as F\n\nclass Model(nn.Module):\n    def __init__(self):\n        super().__init__()\n        self.conv1 = nn.Conv2d(1, 20, 5)\n        self.conv2 = nn.Conv2d(20, 20, 5)\n\n    def forward(self, x):\n        x = F.relu(self.conv1(x))\n        return F.relu(self.conv2(x))\nSubmodules assigned in this way will be registered, and will have their parameters converted too when you call :meth:to, etc.\n.. note:: As per the example above, an __init__() call to the parent class must be made before assignment on the child.\n:ivar training: Boolean represents whether this module is in training or evaluation mode. :vartype training: bool\n\nsource\n\n\nresnet\n\n resnet ()\n\n\nsource\n\n\nModelMonitorS\n\n ModelMonitorS (modules)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nAugmentS\n\n AugmentS (transform)\n\nInitialize self. See help(type(self)) for accurate signature."
+  },
+  {
+    "objectID": "activations.html",
+    "href": "activations.html",
+    "title": "Activations",
+    "section": "",
+    "text": "source\n\nset_seed\n\n set_seed (seed, deterministic=False)\n\n\nsource\n\n\nHook\n\n Hook (nr, layer, func)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nActivationStatsS\n\n ActivationStatsS (modules)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\ninit_weights\n\n init_weights (m)\n\n\nsource\n\n\nNormalizationS\n\n NormalizationS (mean, std)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nconv_block\n\n conv_block (in_c, out_c, kernel_size=3, stride=2, act=True, norm=True)\n\n\nsource\n\n\ncnn_layers\n\n cnn_layers (act=True)"
+  },
+  {
+    "objectID": "ngram.html",
+    "href": "ngram.html",
+    "title": "N-gram",
+    "section": "",
+    "text": "source\n\nNgramDataset\n\n NgramDataset (lines, c2i, n=2)\n\nInitialize self. See help(type(self)) for accurate signature."
+  },
+  {
+    "objectID": "learner.html",
+    "href": "learner.html",
+    "title": "Learner",
+    "section": "",
+    "text": "source\n\nPublishEvents\n\n PublishEvents (name)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nCancelBatchException\nCommon base class for all non-exit exceptions.\n\nsource\n\n\nCancelEpochException\nCommon base class for all non-exit exceptions.\n\nsource\n\n\nCancelFitException\nCommon base class for all non-exit exceptions.\n\nsource\n\n\nLearner\n\n Learner (model, dls, loss_fn, optim_class, lr, subs)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nSubscriber\n\n Subscriber ()\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nMetricsS\n\n MetricsS (**metrics)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nDeviceS\n\n DeviceS (device)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nLRFindS\n\n LRFindS (mult=1.25)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nMomentumLearner\n\n MomentumLearner (model, dls, loss_fn, optim_class, lr, subs, mom=0.85)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nProgressS\n\n ProgressS (plot=False)\n\nInitialize self. See help(type(self)) for accurate signature.\nExample usage:\n\nfrom datasets import load_dataset,load_dataset_builder\n\nfrom nntrain.dataloaders import DataLoaders, hf_ds_collate_fn\n\n\nname = \"fashion_mnist\"\nds_builder = load_dataset_builder(name)\nhf_dd = load_dataset(name)\n\nbs = 1024\nn_in = 28*28\nn_h = 50\nn_out = 10\nlr = 0.01\n\ndls = DataLoaders.from_hf_dd(hf_dd, batch_size=bs)\n\nReusing dataset fashion_mnist (/root/.cache/huggingface/datasets/fashion_mnist/fashion_mnist/1.0.0/8d6c32399aa01613d96e2cbc9b13638f359ef62bb33612b077b4c247f6ef99c1)\n\n\n\n\n\n\ndef get_model():\n    layers = [nn.Linear(n_in, n_h), nn.ReLU(), nn.Linear(n_h, n_out)]\n    return nn.Sequential(*layers)\n\n\nmetrics = MetricsS(accuracy=tem.MulticlassAccuracy())\nprogress = ProgressS(True)\ndevice = DeviceS(device)\n\nl = MomentumLearner(get_model(), dls, F.cross_entropy, torch.optim.SGD, lr, [metrics, progress, device])\nl.fit(5)\n\n\n\n\n\n\n\n\nepoch\nmode\nloss\naccuracy\n\n\n\n\n0\ntrain\n1.763\n0.458\n\n\n0\neval\n1.151\n0.647\n\n\n1\ntrain\n0.949\n0.669\n\n\n1\neval\n0.846\n0.685\n\n\n2\ntrain\n0.777\n0.719\n\n\n2\neval\n0.748\n0.725\n\n\n3\ntrain\n0.697\n0.757\n\n\n3\neval\n0.683\n0.762\n\n\n4\ntrain\n0.643\n0.780\n\n\n4\neval\n0.641\n0.778"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "nntrain",
+    "section": "",
+    "text": "Extend the good documentation of Dataloaders to all other modules 🙈"
+  },
+  {
+    "objectID": "index.html#todos",
+    "href": "index.html#todos",
+    "title": "nntrain",
+    "section": "",
+    "text": "Extend the good documentation of Dataloaders to all other modules 🙈"
+  }
+]
