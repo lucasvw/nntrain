@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 import random
 import numpy as np
 from .learner import Subscriber
+from .activations import conv_block
 
 # %% ../nbs/04_acceleration.ipynb 3
 class SGD:
